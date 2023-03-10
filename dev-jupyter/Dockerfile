@@ -13,24 +13,22 @@ RUN apt-get update \
 	tmux \
 	curl \
 	git \
+	gcc \
+	libxml2-dev \
+    libxslt-dev \
+    # linux-headers \
+    musl-dev \
+	python3-pip \
 	openssh-client \
-	&& mkdir -p /root/.cache/dein /root/.ssh \
-	&& mkdir -p /root/.cache/dein /root/.ssh /home/jovyan/.config/
-	# && mkdir -p /root/.cache/dein /root/.ssh
+	&& apt-get autoremove -y \
+	&& apt-get clean -y \
+	# && mkdir -p /root/.cache/dein /root/.ssh \
+	&& mkdir -p /home/jovyan/.cache/dein /root/.ssh /home/jovyan/.config/
 	
 # copy id_rsa
 COPY ../.ssh/id_rsa /root/.ssh/id_rsa
 
-# WORKDIR /home/jovyan/.config/
-
-# install dein.vim
-RUN curl -sf https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh \
-	| sh -s /root/.cache/dein
-
-# Install vim Plugins
-RUN nvim +:UpdateRemotePlugins +qa
-
-# install dein.vim, git clone ykenkou001/nvim
+# git clone ykenkou001/nvim
 WORKDIR /home/jovyan/.config/
 
 RUN chmod 700 /root/.ssh/ \
