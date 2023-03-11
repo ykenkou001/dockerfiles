@@ -3,12 +3,12 @@ FROM jupyter/minimal-notebook
 
 USER root
 
-RUN apt-get install software-properties-common \
+RUN apt-get update
+RUN apt-get install -y software-properties-common \
 	&& add-apt-repository ppa:neovim-ppa/stable
 
-RUN apt-get update \
 	# && apt-get upgrade -y \
-	&& apt-get remove -y --purge vim-tiny \
+RUN apt-get remove -y --purge vim-tiny \
 	&& apt-get install -y \
 	--no-install-recommends \
 	# install neovim
@@ -17,11 +17,6 @@ RUN apt-get update \
 	curl \
 	git \
 	gcc \
-	# libxml2-dev \
-    # libxslt-dev \
-    # linux-headers \
-    # musl-dev \
-	# python3-pip \
 	openssh-client \
 	&& apt-get autoremove -y \
 	&& apt-get clean -y \
@@ -38,4 +33,8 @@ RUN chmod 700 /root/.ssh/ \
 	&& ssh-keyscan github.com > /root/.ssh/known_hosts \
 	&& git clone git@github.com:ykenkou001/nvim
 
+# USER jovyan
+
 WORKDIR /work
+
+RUN chown -R jovyan /home/jovyan /work
