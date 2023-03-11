@@ -3,6 +3,9 @@ FROM jupyter/minimal-notebook
 
 USER root
 
+RUN apt-get install software-properties-common \
+	&& add-apt-repository ppa:neovim-ppa/stable
+
 RUN apt-get update \
 	# && apt-get upgrade -y \
 	&& apt-get remove -y --purge vim-tiny \
@@ -14,11 +17,11 @@ RUN apt-get update \
 	curl \
 	git \
 	gcc \
-	libxml2-dev \
-    libxslt-dev \
+	# libxml2-dev \
+    # libxslt-dev \
     # linux-headers \
-    musl-dev \
-	python3-pip \
+    # musl-dev \
+	# python3-pip \
 	openssh-client \
 	&& apt-get autoremove -y \
 	&& apt-get clean -y \
